@@ -1,30 +1,31 @@
-// src/components/ImageCard.jsx
-
 import React from "react";
 
-const ImageCard = ({ item }) => {
+const ImageCard = ({ item, position }) => {
   const handleClick = async () => {
     try {
       await fetch(`http://localhost:5000/images/${item.id}/click`, {
         method: "POST",
       });
     } catch (err) {
-      console.error("Click API error:", err);
+      console.error(err);
     }
   };
 
   return (
-    <div>
-      <img
-        src={item.url}
-        alt={item.title}
-        width="400"
-        height="250"
-        onClick={handleClick}
-        style={{ cursor: "pointer" }}
-      />
-      <h3>{item.title}</h3>
-      <p>Category: {item.category}</p>
+    // We add the dynamic position class here (active, prev, next, hidden)
+    <div className={`carousel-item ${position}`}>
+      <div className="card-content">
+        <img
+          src={item.url}
+          alt={item.title}
+          className="carousel-image"
+          onClick={handleClick}
+        />
+        <div className="text-content">
+          <h3 className="carousel-title">{item.title}</h3>
+          <p className="carousel-category">{item.category}</p>
+        </div>
+      </div>
     </div>
   );
 };

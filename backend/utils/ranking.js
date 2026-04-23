@@ -1,34 +1,41 @@
 // utils/ranking.js
 
-export const calculateScore = (image) => {
-  const { clicks, views, lastViewedAt } = image;
+// Calculate score for one image
+export const calculateScore = (image, categoryStats) => {
+  const { clicks, views, lastViewedAt, category } = image;
 
   // Base score
   const baseScore = clicks * 3 + views * 1;
 
-  // Recency boost
+  // -------------------------
+  // Recency Boost
+  // -------------------------
   let recencyBoost = 0;
 
   if (lastViewedAt) {
     const now = new Date();
     const lastViewed = new Date(lastViewedAt);
 
-    // Difference in hours
     const diffInHours = (now - lastViewed) / (1000 * 60 * 60);
 
-    // More recent → higher boost (simple formula)
     recencyBoost = Math.max(0, 100 - diffInHours);
   }
 
-  return baseScore + recencyBoost;
+  // -------------------------
+  // Category Boost
+  // -------------------------
+  const categoryBoost = categoryStats[category] || 0;
+
+  // Final score
+  return baseScore + recencyBoost + categoryBoost;
 };
 
-// Sort images by score (descending)
-export const sortImagesByRanking = (images) => {
+// Sort images by score
+export const sortImagesByRanking = (images, categoryStats) => {
   return images
     .map((img) => ({
       ...img,
-      score: calculateScore(img),
+      score: calculateScore(img, categoryStats),
     }))
     .sort((a, b) => b.score - a.score);
 };

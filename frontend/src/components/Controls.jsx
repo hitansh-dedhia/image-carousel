@@ -4,9 +4,13 @@ import React from "react";
 
 const Controls = ({ onPrev, onNext }) => {
   return (
-    <div>
-      <button onClick={onPrev}>Previous</button>
-      <button onClick={onNext}>Next</button>
+    <div className="carousel-controls">
+      <button className="carousel-button" onClick={onPrev}>
+        ◀ Previous
+      </button>
+      <button className="carousel-button" onClick={onNext}>
+        Next ▶
+      </button>
     </div>
   );
 };
