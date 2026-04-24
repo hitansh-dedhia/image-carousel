@@ -16,7 +16,7 @@ const Carousel = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("http://localhost:5000/images");
+        const res = await fetch("https://image-carousel-backend.onrender.com/images");
         const data = await res.json();
         setImages(data);
         setLoading(false);

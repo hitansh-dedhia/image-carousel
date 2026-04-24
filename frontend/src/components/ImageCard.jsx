@@ -3,7 +3,7 @@ import React from "react";
 const ImageCard = ({ item, position }) => {
   const handleClick = async () => {
     try {
-      await fetch(`http://localhost:5000/images/${item.id}/click`, {
+      await fetch(`https://image-carousel-backend.onrender.com/images/${item.id}/click`, {
         method: "POST",
       });
     } catch (err) {
